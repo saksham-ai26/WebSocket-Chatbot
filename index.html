@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Chatbot</h1>
+  <div id="messages"></div>
+  <input id="inputMessage" type="text" autofocus>
+  <script>
+    const socket = io();
+
+    socket.on('connect', () => {
+      console.log('Connected');
+    });
+
+    socket.on('message', (data) => {
+      const messages = document.getElementById('messages');
+      const newMessage = document.createElement('p');
+      newMessage.textContent = data.text;
+      messages.appendChild(newMessage);
+    });
+
+    const inputMessage = document.getElementById('inputMessage');
+    inputMessage.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const message = inputMessage.value;
+        inputMessage.value = '';
+
+        const messages = document.getElementById('messages');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = `You: ${message}`;
+        messages.appendChild(newMessage);
+
+        socket.emit('message', { text: message });
+      }
+    });
+  </script>
+</body>
+</html>
