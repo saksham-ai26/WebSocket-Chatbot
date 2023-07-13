@@ -1,6 +1,24 @@
 const express = require('express');
 const socketIO = require('socket.io');
 const natural = require('natural');
+const classifier = new natural.BayesClassifier();
+
+classifier.addDocument('hello','greeting');
+classifier.addDocument('how are you','inquiry');
+classifier.addDocument('what is your name?','name_inquiry');
+classifier.addDocument('I am fine too.','response_inquiry');
+classifier.addDocument('What are you doing?','status');
+classifier.addDocument('hehe','default');
+classifier.addDocument('something garbage','default');
+classifier.addDocument('dummy message','default');
+classifier.addDocument('message','default');
+classifier.addDocument('dummy','default');
+classifier.addDocument('hjfdhf','default');
+classifier.addDocument('tbjsjd','default');
+
+
+classifier.train();
+
 
 const app = express();
 const server = app.listen(3000, () => {
@@ -27,17 +45,24 @@ io.on('connection', (socket) => {
 });
 
 function generateResponse(message) {
-  // Tokenize the input message
-  const tokenizer = new natural.WordTokenizer();
-  const tokens = tokenizer.tokenize(message);
+    const classification = classifier.classify(message)
+ switch(classification){
+    case 'greeting':
+        return 'Hello how can I assist you?';
 
-  // Add your chatbot logic here using NLP
-  // This is a simple example that checks for specific keywords
-  if (tokens.includes('hi') || tokens.includes('hello')) {
-    return 'Hello there!';
-  } else if (tokens.includes('bye')) {
-    return 'Goodbye!';
-  } else {
-    return ('I\'m sorry, I didn\'t understand.');
-  }
+    case 'inquiry':
+        return 'I am fine mate,what about you?';
+
+    case 'response_inquiry':
+        return 'That\'s good to know, anything else I can help you with?'; 
+    
+    case 'status':
+        return 'Nothing much, just talking to you';
+
+    case 'name_inquiry':
+        return 'My name is Saksham\'s Chatbot'
+    
+    case 'default':
+        return 'Hey I am sorry as I can\'t yet process this message as I am still in the learning phase.'
+ }
 }

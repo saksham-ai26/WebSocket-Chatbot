@@ -1,0 +1,37 @@
+/* styles.css */
+
+/* Heading */
+h1 {
+    font-family: 'Arial', sans-serif;
+    color: #3366cc;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Chat messages */
+  .messages {
+    max-height: 200px;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
+  .messages p {
+    margin: 5px 0;
+  }
+  
+  /* Input container */
+  .input-container {
+    margin-top: 10px;
+  }
+  
+  /* Body background */
+  body {
+    background-color: #f8f8f8;
+    background-image: linear-gradient(to bottom right, #ff99cc, #cc99ff);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
