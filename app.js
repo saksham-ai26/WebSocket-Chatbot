@@ -4,17 +4,15 @@ const natural = require('natural');
 const classifier = new natural.BayesClassifier();
 
 classifier.addDocument('hello','greeting');
-classifier.addDocument('how are you','inquiry');
 classifier.addDocument('what is your name?','name_inquiry');
+classifier.addDocument('How are you?','inquiry');
 classifier.addDocument('I am fine too','response_inquiry');
 classifier.addDocument('What are you doing?','status');
 classifier.addDocument('hehe','default');
 classifier.addDocument('something garbage','default');
 classifier.addDocument('dummy message','default');
 classifier.addDocument('message','default');
-classifier.addDocument('dummy','default');
-classifier.addDocument('hjfdhf','default');
-classifier.addDocument('tbjsjd','default');
+
 
 
 classifier.train();
