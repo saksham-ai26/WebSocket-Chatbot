@@ -3,11 +3,11 @@ const socketIO = require('socket.io');
 const natural = require('natural');
 const classifier = new natural.BayesClassifier();
 
-classifier.addDocument('hello','greeting');
+classifier.addDocument('Hello','greeting');
 classifier.addDocument('what is your name?','name_inquiry');
-classifier.addDocument('How are you?','inquiry');
-classifier.addDocument('I am fine too','response_inquiry');
+classifier.addDocument('I am fine.','response_inquiry');
 classifier.addDocument('What are you doing?','status');
+classifier.addDocument('Goodbye','leave');
 classifier.addDocument('hehe','default');
 classifier.addDocument('something garbage','default');
 classifier.addDocument('dummy message','default');
@@ -48,9 +48,6 @@ function generateResponse(message) {
     case 'greeting':
         return 'Hello how can I assist you?';
 
-    case 'inquiry':
-        return 'I am fine mate,what about you?';
-
     case 'response_inquiry':
         return 'That\'s good to know, anything else I can help you with?'; 
     
@@ -58,7 +55,10 @@ function generateResponse(message) {
         return 'Nothing much, just talking to you';
 
     case 'name_inquiry':
-        return 'My name is Saksham\'s Chatbot'
+        return 'My name is Saksham\'s Chatbot.How are you?'
+      
+    case 'leave':
+        return 'Goodbye, have a nice day!'
     
     case 'default':
         return 'Hey I am sorry as I can\'t yet process this message as I am still in the learning phase.'
